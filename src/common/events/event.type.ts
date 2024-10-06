@@ -1,0 +1,5 @@
+export enum EventType {
+  LOGIN = 'LOGIN',
+  ORDER_PAID = 'ORDER_PAID',
+  ORDER_CANCELED = 'ORDER_CANCELED',
+}
