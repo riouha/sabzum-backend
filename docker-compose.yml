@@ -7,16 +7,16 @@ services:
     environment:
       DB_HOST: postgres
       DB_PORT: 5432
-      DB_USER: user
-      DB_PASSWORD: pass
-      DB_NAME: dbname
-    ports:
-      - "3400:3400"
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: sabzumdb
     volumes:
       - ./uploads:/app/uploads
+    ports:
+      - "4100:4100"
     networks:
-      - postgresql_pgnet
+      - postgres_pgnet
 
 networks:
-  postgresql_pgnet:
+  postgres_pgnet:
     external: true

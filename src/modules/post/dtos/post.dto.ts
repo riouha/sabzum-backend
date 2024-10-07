@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsDate, IsOptional, IsString } from 'class-validator';
 
@@ -35,3 +36,5 @@ export class CreatePostDto {
   @IsString({ each: true })
   keywords?: string[];
 }
+
+export class EditPostDto extends PartialType(CreatePostDto) {}
