@@ -21,8 +21,11 @@ export class FileController {
 
   @Get('/:id')
   async downloadFile(@Param('id') id: string): Promise<StreamableFile> {
-    await this.fileService.getFile(id);
+    const file = await this.fileService.getFile(id);
     const stream = createReadStream(join(process.cwd(), 'uploads', id));
-    return new StreamableFile(stream, { type: 'image', disposition: 'inline' });
+    const disposition = file.type.startsWith('image')
+      ? `inline;filename=${file.name}`
+      : `attachment;filename=${file.name}`;
+    return new StreamableFile(stream, { type: file.type, disposition });
   }
 }
