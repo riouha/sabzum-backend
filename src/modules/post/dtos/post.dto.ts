@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsDate, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsIn, IsOptional, IsString } from 'class-validator';
 
 export class CreatePostDto {
   @IsString()
@@ -38,3 +38,9 @@ export class CreatePostDto {
 }
 
 export class EditPostDto extends PartialType(CreatePostDto) {}
+
+export class SearchPostDto /* extends SearchDto */ {
+  @IsOptional()
+  @IsIn(['0', '1'])
+  drafts?: '0' | '1';
+}

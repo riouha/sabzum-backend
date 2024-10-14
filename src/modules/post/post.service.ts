@@ -2,17 +2,20 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Not, Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
-import { CreatePostDto, EditPostDto } from './dtos/post.dto';
+import { CreatePostDto, EditPostDto, SearchPostDto } from './dtos/post.dto';
 import { slugify } from '../../common/utils/slugify';
 import { FileService } from '../file/services/file.service';
 
 @Injectable()
 export class PostService {
-  constructor(@InjectRepository(Post) private postRepo: Repository<Post>, private readonly fileService: FileService) {}
+  constructor(
+    @InjectRepository(Post) private readonly postRepo: Repository<Post>,
+    private readonly fileService: FileService,
+  ) {}
 
-  async sarchPosts() {
+  async sarchPosts(dto: SearchPostDto) {
     const posts = await this.postRepo.find({
-      where: { published: Not(IsNull()) },
+      where: { ...(dto.drafts !== '1' && { published: Not(IsNull()) }) },
       relations: { author: true },
       order: { published: 'DESC' },
     });

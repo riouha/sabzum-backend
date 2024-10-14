@@ -1,7 +1,8 @@
 import { ClassSerializerInterceptor, Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PostService } from './post.service';
-import { Param, UseInterceptors } from '@nestjs/common/decorators';
+import { Param, Query, UseInterceptors } from '@nestjs/common/decorators';
+import { SearchPostDto } from './dtos/post.dto';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('post')
@@ -15,7 +16,7 @@ export class PostController {
   }
 
   @Get('/')
-  async searchPosts() {
-    return this.postService.sarchPosts();
+  async searchPosts(@Query() dto: SearchPostDto) {
+    return this.postService.sarchPosts(dto);
   }
 }
