@@ -26,7 +26,7 @@ export class FileService {
     const images = await this.fileRepo.find({ where: { type: ILike('image%') } });
     return images.map((img) => ({
       id: img.id,
-      src: `http://${this.configService.get('APP_URL')}:${this.configService.get('PORT')}/file/${img.id}`,
+      src: `http://${this.configService.get('APP_URL')}}/file/${img.id}`,
       name: img.name,
     }));
   }
